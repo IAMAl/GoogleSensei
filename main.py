@@ -2,7 +2,7 @@ import streamlit
 import pandas as pd
 import core.scrape_serps
 
-def main(suggest, query_en=False, query_file_name='suggest', file_wt_en=False,file_name='data'):
+def main(suggests, query_en=False, query_file_name='suggest', file_wt_en=False,file_name='data'):
     api_counter = 0
     j = 0
     page = input("how many page do you want?(1or2)")
@@ -13,7 +13,7 @@ def main(suggest, query_en=False, query_file_name='suggest', file_wt_en=False,fi
         df.columns=["suggest"]
         sg = list(df["suggest"])
     else:
-        sg = suggest
+        sg = suggests
 
     urls = []
     titles = []
