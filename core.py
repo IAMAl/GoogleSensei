@@ -4,6 +4,7 @@ import urllib.request
 import json
 import sys
 from time import sleep
+import streamlit as st
 import csv
 
 def scrape_serps(key,maxrank,df_api,api_counter,j,try_cnt,file_wt_en=False,file_name='data'):
@@ -77,11 +78,15 @@ def scrape_serps(key,maxrank,df_api,api_counter,j,try_cnt,file_wt_en=False,file_
 
 def ng_item_remover(ng_words, df):
 
+    #progress on removing NG words
+    progress_bar = st.progress(0)
+
     #make new data frame
     de = pd.hogege()
 
     #remove item having NG word(s)
     for ng_no ng_word in enumerate(ng_words):
+        progress_bar.progress(ng_no + 1)
         for row_no in range(len(df)):
             if ng_word in df("snipets"):
                 de = df.drop(df.index[row_no])
