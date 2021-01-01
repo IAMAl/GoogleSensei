@@ -1,15 +1,19 @@
 import streamlit
 import pandas as pd
-import scrape_serps
+import core.scrape_serps
 
-def main():
+def main(suggest, query_en=False, query_file_name='suggest', file_wt_en=False,file_name='data'):
     api_counter = 0
     j = 0
     page = input("how many page do you want?(1or2)")
     page = int(page)
-    df = pd.read_csv("suggest.csv",header=None)
-    df.columns=["suggest"]
-    sg = list(df["suggest"])
+
+    if query_en:
+        df = pd.read_csv(query_file_name+".csv",header=None)
+        df.columns=["suggest"]
+        sg = list(df["suggest"])
+    else:
+        sg = suggest
 
     urls = []
     titles = []
@@ -26,10 +30,6 @@ def main():
     for key in sg:
         ct = ct + 1
         try_cnt = 0
-        print ("")
-        print (GREEN+str(ct)+ENDC)
-        print("====================================")
-        print(key)
         try: 
             url_list,title_list,snippet_list,df_api,api_counter,j = scrape_serps(key,page,df_api,api_counter,j,try_cnt)
             urls_.extend(url_list)
@@ -45,14 +45,13 @@ def main():
     urls = pd.DataFrame(urls)
     titles = pd.DataFrame(titles)
     snippets = pd.DataFrame(snippets)
-    df = pd.concat([df,urls],axis=1)
-    df.to_csv("urls.csv")
-    df_ = pd.concat([pd.Series(urls_),pd.Series(sgs)],axis=1)
-    # web_id は自動で付与される
-    df_.columns = ["url","suggest"]
+    #df = pd.concat([df,urls],axis=1)
+    #df.to_csv("urls.csv")
+    #df_ = pd.concat([pd.Series(urls_),pd.Series(sgs)],axis=1)
+    #df_.columns = ["url","suggest"]
 
 
-    de = pd.concat([pd.Series(urls_), pd.Series(titles_), pd.Series(snippets_)],axis=1)
+    de = pd.concat([pd.Series(urls), pd.Series(titles), pd.Series(snippets)],axis=1)
     de.columns = ["url","title","snippets"]
 
-
+    return de

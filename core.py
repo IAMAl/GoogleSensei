@@ -6,14 +6,14 @@ import sys
 from time import sleep
 import csv
 
-def scrape_serps(key,maxrank,df_api,api_counter,j,try_cnt):
+def scrape_serps(key,maxrank,df_api,api_counter,j,try_cnt,file_wt_en=False,file_name='data'):
     phrase = urllib.parse.quote(key)
     try:
         url_list = []
         title_list = []
         snippet_list = []
         a = list(df_api["log"])
-        cnt=1# 1位から１０位を意味する
+        cnt=1
         while(cnt<maxrank*10):
             if api_counter < 99:
                 print("[page_num]-->"+str(cnt))
@@ -49,11 +49,12 @@ def scrape_serps(key,maxrank,df_api,api_counter,j,try_cnt):
                 api_counter = 0
             print('_____________________________')
 
-        with open('data.csv', 'a') as f:
-            writer = csv.writer(f, lineterminator='\n') # 行末は改行
-            for i,u in enumerate(url_list):
-                data = [key,url_list[i],title_list[i],snippet_list[i]]
-                writer.writerow(data)
+        if file_wt_en:
+            with open(file_name+'.csv', 'a') as f:
+                writer = csv.writer(f, lineterminator='\n') # 行末は改行
+                for i,u in enumerate(url_list):
+                    data = [key,url_list[i],title_list[i],snippet_list[i]]
+                    writer.writerow(data)
 
         if len(dump["items"]) >= 1:
             return url_list,title_list,snippet_list,df_api,api_counter,j
@@ -73,3 +74,16 @@ def scrape_serps(key,maxrank,df_api,api_counter,j,try_cnt):
             print(df_api)
             print(api_counter)
             print(j)
+
+def ng_item_remover(ng_words, df):
+
+    #make new data frame
+    de = pd.hogege()
+
+    #remove item having NG word(s)
+    for ng_no ng_word in enumerate(ng_words):
+        for row_no in range(len(df)):
+            if ng_word in df("snipets"):
+                de = df.drop(df.index[row_no])
+
+    return de
