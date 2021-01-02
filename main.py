@@ -1,3 +1,4 @@
+#encoding:utf-8
 import streamlit
 import pandas as pd
 import core.scrape_serps

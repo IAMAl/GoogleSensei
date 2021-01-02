@@ -1,4 +1,6 @@
+#encoding:utf-8
 import streamlit
+import main.main
 
 st.sidebar.title("グーグル先生")
 
