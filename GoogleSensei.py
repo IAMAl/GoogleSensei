@@ -11,8 +11,6 @@ suggests = st.sidebar.text_input()
 st.sidebar.text("NG Words")
 ng_words = st.sidebar.text_input()
 
-start_search = st.button('Search')
-
 query_en = st.checkbox('Set Query')
 query_file_name = []
 if query_en:
@@ -23,6 +21,7 @@ file_name = []
 if file_wt_en:
     file_name = st.sidebar.text_input()
 
+start_search = st.button('Search')
 if start_search:
     df = main(suggests, query_en, query_file_name, file_wt_en, file_name)
     df = ng_item_remover(ng_words, df)
