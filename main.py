@@ -41,7 +41,7 @@ def main(suggests, query_en=False, query_file_name='suggest', file_wt_en=False,f
                     sgs.append(key)
                 urls += [url_list]
         except:
-            print('exceptional error occured and skipped')
+            print('exceptional error occurred and skipped')
 
     urls = pd.DataFrame(urls)
     titles = pd.DataFrame(titles)

@@ -1,6 +1,7 @@
 #encoding:utf-8
 import urllib
 import urllib.request
+import pandas as pd
 import json
 import sys
 from time import sleep
@@ -82,13 +83,14 @@ def ng_item_remover(ng_words, df):
     progress_bar = st.progress(0)
 
     #make new data frame
-    de = pd.hogege()
+    column_names = ["title", "link", "snippet"]
+    new_fd = pd.DataFrame(columns = column_names)
 
     #remove item having NG word(s)
     for ng_no ng_word in enumerate(ng_words):
         progress_bar.progress(ng_no + 1)
         for row_no in range(len(df)):
             if ng_word in df("snipets"):
-                de = df.drop(df.index[row_no])
+                new_df = df.drop(df.index[row_no])
 
     return de
